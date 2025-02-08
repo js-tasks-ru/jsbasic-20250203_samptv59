@@ -10,7 +10,14 @@ function print(text) {
  * чтобы функция sayHello работала корректно
  */
 function isValid(name) {
-  // ваш код...
+  if (typeof name !== 'string' || name.trim() === '') {
+    return false;
+  }
+
+  name = name.trim();
+  const validNamePattern = /^[A-Za-zА-Яа-яЁё]+$/;
+
+  return name.length >= 4 && validNamePattern.test(name);
 }
 
 function sayHello() {

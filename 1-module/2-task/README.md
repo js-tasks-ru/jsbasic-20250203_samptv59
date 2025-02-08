@@ -18,14 +18,7 @@ function print(text) {
  * @returns {boolean}
  */
 function isValid(name) {
-  if (typeof name !== 'string' || name.trim() === '') {
-    return false;
-  }
-
-  name = name.trim();
-  const validNamePattern = /^[A-Za-zА-Яа-яЁё]+$/;
-
-  return name.length >= 4 && validNamePattern.test(name);
+  // ваш код...
 }
 
 /**
