@@ -5,7 +5,7 @@ function makeFriendsList(friends) {
   friends.forEach(item => {
     const li = document.createElement('li')
     li.textContent = `${item.firstName} ${item.lastName}`
-    ul.appendChild(li)
+    ul.appendChild(li) 
   })
 
   return ul
