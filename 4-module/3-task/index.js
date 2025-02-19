@@ -42,6 +42,6 @@ function highlight(table) {
     
     if (!availableItem && !unavailableItem) {
       row.setAttribute('hidden', 'true')
-    }
+    } 
   });
 }
