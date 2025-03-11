@@ -10,18 +10,17 @@ export default class StepSlider {
     this.thumb = this.#createThumbElement();
     this.progress = this.#createProgressElement();
     this.stepsElem = this.#createStepsElement();
-    
+
     this.elem.appendChild(this.thumb);
     this.elem.appendChild(this.progress);
     this.elem.appendChild(this.stepsElem);
-    
+
     this.elem.addEventListener('click', (event) => this.#onSliderClick(event));
-    
-    this.thumb.ondragstart = () => false; 
+    this.thumb.ondragstart = () => false;
     this.thumb.addEventListener('pointerdown', (event) => this.#onThumbPointerDown(event));
-    this.elem.addEventListener('pointerup', () => this.#onPointerUp());
-    this.elem.addEventListener('pointermove', (event) => this.#onPointerMove(event));
-    
+    document.addEventListener('pointerup', () => this.#onPointerUp());
+    document.addEventListener('pointermove', (event) => this.#onPointerMove(event));
+
     this.#updateSlider();
   }
 
@@ -53,7 +52,7 @@ export default class StepSlider {
     for (let i = 0; i < this.steps; i++) {
       const step = document.createElement('span');
       if (i === this.value) {
-        step.className = 'slider__step-active';
+        step.classList.add('slider__step-active');
       }
       stepsElem.appendChild(step);
     }
@@ -69,39 +68,55 @@ export default class StepSlider {
   }
 
   #onThumbPointerDown(event) {
-    event.preventDefault(); // Предотвращаем стандартное поведение
+    event.preventDefault();
     this.elem.classList.add('slider_dragging');
-    this.#onPointerMove(event); // Начинаем перемещение сразу при нажатии
+    this.#onPointerMove(event);
   }
 
   #onPointerMove(event) {
+    if (!this.elem.classList.contains('slider_dragging')) {
+      return;
+    }
+
     const sliderRect = this.elem.getBoundingClientRect();
     let left = event.clientX - sliderRect.left;
     let leftRelative = left / sliderRect.width;
-    leftRelative = Math.max(0, Math.min(1, leftRelative)); // Ограничиваем значения от 0 до 1
-    
+    leftRelative = Math.max(0, Math.min(1, leftRelative));
+
     let segments = this.steps - 1;
     let approximateValue = leftRelative * segments;
     let value = Math.round(approximateValue);
-    
-    this.setValue(value); // Обновляем значение здесь
-    
+
+    this.setValue(value);
+
     let leftPercents = leftRelative * 100;
     this.thumb.style.left = `${leftPercents}%`;
     this.progress.style.width = `${leftPercents}%`;
   }
 
   #onPointerUp() {
-    this.elem.classList.remove('slider_dragging');
+    if (this.elem.classList.contains('slider_dragging')) {
+      this.elem.classList.remove('slider_dragging');
+      const event = new CustomEvent('slider-change', {
+        detail: this.value,
+        bubbles: true
+      });
+      this.elem.dispatchEvent(event);
+    }
   }
 
   setValue(value) {
+    if (value < 0 || value >= this.steps) {
+      return;
+    }
     this.value = value;
-    this.#updateSlider(); // Обновляем слайдер
-    this.elem.dispatchEvent(new CustomEvent('slider-change', {
+    this.#updateSlider();
+
+    const event = new CustomEvent('slider-change', {
       detail: this.value,
       bubbles: true
-    }));
+    });
+    this.elem.dispatchEvent(event);
   }
 
   #updateSlider() {
@@ -109,7 +124,7 @@ export default class StepSlider {
     const leftPercents = (this.value / (this.steps - 1)) * 100;
     this.thumb.style.left = `${leftPercents}%`;
     this.progress.style.width = `${leftPercents}%`;
-    
+
     const steps = this.stepsElem.querySelectorAll('span');
     steps.forEach((step, index) => {
       step.classList.toggle('slider__step-active', index === this.value);
