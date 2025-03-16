@@ -58,7 +58,6 @@ export default class ProductGrid {
     });
   }
   
-
   // Метод для обновления фильтров
   updateFilter(filters) {
     Object.assign(this.filters, filters); // Обновляем текущие фильтры
