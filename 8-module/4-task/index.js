@@ -1,5 +1,6 @@
 import createElement from '../../assets/lib/create-element.js';
 import escapeHtml from '../../assets/lib/escape-html.js';
+
 import Modal from '../../7-module/2-task/index.js';
 
 export default class Cart {
@@ -7,10 +8,12 @@ export default class Cart {
 
   constructor(cartIcon) {
     this.cartIcon = cartIcon;
+
     this.addEventListeners();
   }
 
   addProduct(product) {
+
     if (!product) return;
     let cartItem = this.cartItems.find(item => item.product.id === product.id);
     if (cartItem) {
@@ -45,6 +48,24 @@ export default class Cart {
 
   getTotalPrice() {
     return this.cartItems.reduce((total, item) => total + item.product.price * item.count, 0);
+
+    // СКОПИРУЙТЕ СЮДЯ СВОЙ КОД
+  }
+
+  updateProductCount(productId, amount) {
+    // СКОПИРУЙТЕ СЮДЯ СВОЙ КОД
+  }
+
+  isEmpty() {
+    // СКОПИРУЙТЕ СЮДЯ СВОЙ КОД
+  }
+
+  getTotalCount() {
+    // СКОПИРУЙТЕ СЮДЯ СВОЙ КОД
+  }
+
+  getTotalPrice() {
+    // СКОПИРУЙТЕ СЮДЯ СВОЙ КОД
   }
 
   renderProduct(product, count) {
@@ -69,6 +90,29 @@ export default class Cart {
           </div>
         </div>
       </div>`);
+
+    <div class="cart-product" data-product-id="${
+      product.id
+    }">
+      <div class="cart-product__img">
+        <img src="/assets/images/products/${product.image}" alt="product">
+      </div>
+      <div class="cart-product__info">
+        <div class="cart-product__title">${escapeHtml(product.name)}</div>
+        <div class="cart-product__price-wrap">
+          <div class="cart-counter">
+            <button type="button" class="cart-counter__button cart-counter__button_minus">
+              <img src="/assets/images/icons/square-minus-icon.svg" alt="minus">
+            </button>
+            <span class="cart-counter__count">${count}</span>
+            <button type="button" class="cart-counter__button cart-counter__button_plus">
+              <img src="/assets/images/icons/square-plus-icon.svg" alt="plus">
+            </button>
+          </div>
+          <div class="cart-product__price">€${product.price.toFixed(2)}</div>
+        </div>
+      </div>
+    </div>`);
   }
 
   renderOrderForm() {
@@ -87,6 +131,9 @@ export default class Cart {
           <div class="cart-buttons__info">
             <span class="cart-buttons__info-text">total</span>
             <span class="cart-buttons__info-price">€${this.getTotalPrice().toFixed(2)}</span>
+            <span class="cart-buttons__info-price">€${this.getTotalPrice().toFixed(
+              2
+            )}</span>
           </div>
           <button type="submit" class="cart-buttons__button btn-group__button button">order</button>
         </div>
@@ -236,7 +283,21 @@ export default class Cart {
 }
 
 
+    // ...ваш код
+  }
+
+  onProductUpdate(cartItem) {
+    // ...ваш код
+
+    this.cartIcon.update(this);
+  }
+
+  onSubmit(event) {
+    // ...ваш код
+  };
+
+
   addEventListeners() {
     this.cartIcon.elem.onclick = () => this.renderModal();
   }
-}
+

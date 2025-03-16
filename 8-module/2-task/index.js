@@ -5,6 +5,7 @@ export default class ProductGrid {
   constructor(products) {
     this.products = products;
     this.filters = {};
+
     this.elem = this.render();
     this.updateProductCards(); // Изначально отображаем все товары
   }
@@ -63,5 +64,6 @@ export default class ProductGrid {
   updateFilter(filters) {
     Object.assign(this.filters, filters); // Обновляем текущие фильтры
     this.updateProductCards(); // Обновляем отображаемые карточки товаров
+
   }
 }

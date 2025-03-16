@@ -1,11 +1,16 @@
 export default class Cart {
+
   cartItems = []; // [{ product: {...}, count: N }]
+
+  cartItems = []; // [product: {...}, count: N]
+
 
   constructor(cartIcon) {
     this.cartIcon = cartIcon;
   }
 
   addProduct(product) {
+
     if (!product) return;
 
     let cartItem = this.cartItems.find(item => item.product.id === product.id);
@@ -53,3 +58,31 @@ export default class Cart {
     this.cartIcon.update(this);
   }
 }
+
+    // ваш код
+  }
+
+  updateProductCount(productId, amount) {
+    // ваш код
+  }
+
+  isEmpty() {
+    // ваш код
+  }
+
+  getTotalCount() {
+    // ваш код
+  }
+
+  getTotalPrice() {
+    // ваш код
+  }
+
+  onProductUpdate(cartItem) {
+    // реализуем в следующей задаче
+
+    this.cartIcon.update(this);
+  }
+}
+
+

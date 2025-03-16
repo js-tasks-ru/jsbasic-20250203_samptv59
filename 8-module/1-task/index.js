@@ -3,8 +3,13 @@ import createElement from '../../assets/lib/create-element.js';
 export default class CartIcon {
   constructor() {
     this.render();
+
     this.addEventListeners();
     this.initialTopCoord = null; // Начальная координата верхнего края иконки
+
+
+    this.addEventListeners();
+
   }
 
   render() {
@@ -26,7 +31,10 @@ export default class CartIcon {
       this.elem.classList.add('shake');
       this.elem.addEventListener('transitionend', () => {
         this.elem.classList.remove('shake');
+
       }, { once: true });
+
+      }, {once: true});
 
     } else {
       this.elem.classList.remove('cart-icon_visible');
@@ -39,6 +47,7 @@ export default class CartIcon {
   }
 
   updatePosition() {
+
     if (!this.elem.offsetHeight) return; // Если иконка не видима, выходим
 
     // Если ширина окна ≤ 767px, сбрасываем стили и выходим
@@ -89,3 +98,7 @@ export default class CartIcon {
     }
   }
 }
+
+    // ваш код ...
+  }
+
